@@ -197,6 +197,8 @@ export default function Bookings() {
                                                 <SelectItem value="chrystalla">Chrystalla</SelectItem>
                                                 <SelectItem value="kayla">Kayla</SelectItem>
                                                 <SelectItem value="hannah">Hannah-G</SelectItem>
+                                                <SelectItem value="lily">Lily Carmody</SelectItem>
+                                                <SelectItem value="eilish">Eilish Beckett</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
