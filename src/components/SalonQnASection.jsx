@@ -153,10 +153,16 @@ export default function SalonQnASection() {
                     {foundSalon?.notFound ? (
                       <>
                         <p className="text-xs font-medium text-neutral-600 mb-2">
-                          ⚠ COULDN'T FETCH ADDRESS
+                          ✓ FOUND SALON
+                        </p>
+                        <h4 className="font-serif text-sm text-neutral-900 mb-2">
+                          The Salon Edit (formerly iBeauty Medispa)
+                        </h4>
+                        <p className="text-xs text-neutral-600 mb-2">
+                          Took too long to fetch address
                         </p>
                         <p className="text-xs text-neutral-600">
-                          We couldn't find an exact address for <strong>{suburbQuery}</strong> in our database. Please check with our staff or team - we may have locations or at-home services available in your area!
+                          Kindly check with our staff or team for the address.
                         </p>
                       </>
                     ) : (
