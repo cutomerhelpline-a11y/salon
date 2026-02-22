@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { openWhatsApp } from '@/lib/whatsapp';
 
 const questions = [
   'Do you offer discounts or is price negotiable?',
@@ -12,26 +13,11 @@ const questions = [
   'How far in advance should I book an appointment?'
 ];
 
-const randomSalonNames = [
-  'Bella Skin Care',
-  'Vine Tree Beauty',
-  'Luxe Hair Studio',
-  'Radiance Salon',
-  'Elite Styling Co',
-  'Prime Salon Edit',
-  'Shine Hair Co',
-  'Star Beauty Salon'
-];
+const SALON_PHONE = '61468231108';
 
 export default function SalonQnASection() {
   const [selected, setSelected] = useState([]);
   const [salons, setSalons] = useState([]);
-  const [suburbs, setSuburbs] = useState([]);
-  const [suburbQuery, setSuburbQuery] = useState('');
-  const [showSuburbDropdown, setShowSuburbDropdown] = useState(false);
-  const [selectedSuburb, setSelectedSuburb] = useState('');
-  const [foundSalon, setFoundSalon] = useState(null);
-  const [searched, setSearched] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
@@ -39,10 +25,6 @@ export default function SalonQnASection() {
         const res = await fetch('/data/salons.json');
         const data = await res.json();
         setSalons(data);
-        
-        // Extract all unique suburbs
-        const unique = [...new Set(data.map((s) => s.suburb).filter(Boolean))].sort();
-        setSuburbs(unique);
       } catch (e) {
         console.error('Failed to load data', e);
       }
@@ -56,38 +38,6 @@ export default function SalonQnASection() {
         ? prev.filter((i) => i !== index)
         : [...prev, index]
     );
-    // Reset suburb search when unchecked
-    if (selected.includes(2)) {
-      setSelectedSuburb('');
-      setFoundSalon(null);
-      setSearched(false);
-    }
-  };
-
-  const handleSuburbSearch = (suburb) => {
-    setSuburbQuery(suburb);
-    setSelectedSuburb(suburb);
-    setShowSuburbDropdown(false);
-
-    // Search for salon in that suburb
-    const salonInSuburb = salons.find((s) => s.suburb === suburb);
-
-    if (salonInSuburb) {
-      // Found a real salon
-      setFoundSalon(salonInSuburb);
-      setSearched(true);
-    } else {
-      // Suburb not in database - pretend to search and return random
-      const randomSalon = randomSalonNames[Math.floor(Math.random() * randomSalonNames.length)];
-      setFoundSalon({
-        name: randomSalon,
-        address: suburb,
-        state: 'AU',
-        postcode: '____',
-        isFallback: true,
-      });
-      setSearched(true);
-    }
   };
 
   const handleGetAnswers = () => {
@@ -97,8 +47,8 @@ export default function SalonQnASection() {
     let body = `Hi, I have the following questions:\n\n• ${selectedQuestions}`;
 
     if (selected.includes(2) && foundSalon) {
-      if (foundSalon.isFallback) {
-        body += `\n\nSuburb Searched: ${selectedSuburb}\n\nNote: System took too long to fetch the exact address from our database, but we found a salon in ${selectedSuburb} (formerly ${foundSalon.name}). Our team will provide you with the best solution!`;
+      if (foundSalon.notFound) {
+        body += `\n\nSuburb Searched: ${selectedSuburb}\n\nCouldn't fetch the exact address from our database, but please check with our staff or team as we may have locations or at-home services available in your area!`;
       } else {
         body += `\n\nSuburb Searched: ${selectedSuburb}\nOur Location: The Salon Edit (formerly ${foundSalon.name})\nAddress: ${foundSalon.address}, ${foundSalon.state} ${foundSalon.postcode}`;
       }
@@ -107,9 +57,8 @@ export default function SalonQnASection() {
     }
 
     body += `\n\nPlease help me with answers. Thank you!`;
-    const message = encodeURIComponent(body);
 
-    window.open(`https://wa.me/?text=${message}`, '_blank');
+    openWhatsApp(SALON_PHONE, body);
   };
 
   return (
@@ -197,25 +146,32 @@ export default function SalonQnASection() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className={`p-4 rounded-lg border ${
-                      foundSalon?.isFallback
+                      foundSalon?.notFound
                         ? 'bg-yellow-50 border-yellow-200'
                         : 'bg-green-50 border-green-200'
                     }`}
                   >
-                    <p className="text-xs font-medium text-neutral-600 mb-2">
-                      ✓ LOCATION FOUND IN {selectedSuburb.toUpperCase()}
-                    </p>
-                    <h4 className="font-serif text-sm text-neutral-900 mb-1">
-                      The Salon Edit (formerly {foundSalon?.name})
-                    </h4>
-                    {foundSalon?.isFallback ? (
-                      <p className="text-xs text-neutral-600">
-                        System took too long to fetch the exact address from our database, but we found a salon in this suburb. Our team will answer any questions you have!
-                      </p>
+                    {foundSalon?.notFound ? (
+                      <>
+                        <p className="text-xs font-medium text-neutral-600 mb-2">
+                          ⚠ WE'LL CHECK WITH OUR TEAM
+                        </p>
+                        <p className="text-xs text-neutral-600">
+                          Couldn't find an exact address for {selectedSuburb} in our database, but our staff will confirm if we have a location or at-home service available in your area. Please proceed with your questions!
+                        </p>
+                      </>
                     ) : (
-                      <p className="text-xs text-neutral-600">
-                        📍 {foundSalon?.address}, {foundSalon?.state} {foundSalon?.postcode}
-                      </p>
+                      <>
+                        <p className="text-xs font-medium text-neutral-600 mb-2">
+                          ✓ LOCATION FOUND IN {selectedSuburb.toUpperCase()}
+                        </p>
+                        <h4 className="font-serif text-sm text-neutral-900 mb-1">
+                          The Salon Edit (formerly {foundSalon?.name})
+                        </h4>
+                        <p className="text-xs text-neutral-600">
+                          📍 {foundSalon?.address}, {foundSalon?.state} {foundSalon?.postcode}
+                        </p>
+                      </>
                     )}
                     <button
                       type="button"
