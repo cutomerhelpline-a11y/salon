@@ -2,52 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
-import { getUserLocationFromIP, findNearestSalon } from '@/lib/nearest-salon';
 import SalonQnASection from '../SalonQnASection';
 
 export default function IntroSection() {
-  const [nearestSalon, setNearestSalon] = useState(null);
-  const [initialLoading, setInitialLoading] = useState(true);
-  const [manualLoading, setManualLoading] = useState(false);
-  const [showManualResult, setShowManualResult] = useState(false);
-
-  const fetchNearestSalon = async () => {
-    try {
-      const salonsResponse = await fetch('/data/salons.json');
-      const salons = await salonsResponse.json();
-      
-      const location = await getUserLocationFromIP();
-      
-      if (location && location.latitude && location.longitude) {
-        const nearest = findNearestSalon(location.latitude, location.longitude, salons);
-        setNearestSalon(nearest);
-        return nearest;
-      }
-      return null;
-    } catch (error) {
-      console.error('Error finding nearest salon:', error);
-      return null;
-    }
-  };
-
-  useEffect(() => {
-    const initSalon = async () => {
-      await fetchNearestSalon();
-      setInitialLoading(false);
-    };
-    initSalon();
-  }, []);
-
-  const handleWhereLocatedClick = async () => {
-    setManualLoading(true);
-    setShowManualResult(false);
-    await new Promise(r => setTimeout(r, 1000)); // simulate loading UI
-    const result = await fetchNearestSalon();
-    setManualLoading(false);
-    if (result) {
-      setShowManualResult(true);
-    }
-  };
 
   return (
     <section className="py-24 md:py-32 px-6">
@@ -79,62 +36,12 @@ export default function IntroSection() {
             >
               Book Now
             </Link>
-
-            {!initialLoading && nearestSalon && (
-              <button
-                onClick={handleWhereLocatedClick}
-                disabled={manualLoading}
-                className="bg-neutral-200 text-neutral-900 px-10 py-4 text-[11px] tracking-[0.25em] uppercase font-medium hover:bg-neutral-300 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
-              >
-                {manualLoading ? (
-                  <>
-                    <span className="inline-block animate-spin">⏳</span>
-                    Loading
-                  </>
-                ) : (
-                  'Where are we located'
-                )}
-              </button>
-            )}
           </div>
 
-          {/* Q&A Section - When no salon found */}
-          {!initialLoading && !nearestSalon && (
-            <div className="mt-12">
-              <SalonQnASection />
-            </div>
-          )}
-
-          {/* Manual Location Result */}
-          {showManualResult && nearestSalon && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-neutral-50 p-6 rounded-lg mt-6 border border-neutral-200"
-            >
-              <p className="text-[11px] tracking-[0.3em] uppercase text-neutral-400 mb-2">
-                Your Nearest Salon
-              </p>
-              <h3 className="font-serif text-xl text-neutral-900 mb-2">
-                The Salon Edit (formerly {nearestSalon.name})
-              </h3>
-              <p className="text-neutral-600 text-sm mb-4">
-                📍 {nearestSalon.address}, {nearestSalon.state} {nearestSalon.postcode}
-              </p>
-              <p className="text-neutral-600 text-sm leading-relaxed mb-4">
-                We've transformed this location by adding expert stylists, redesigning the space, and introducing our signature low-toxicity services to better serve you.
-              </p>
-              {nearestSalon.phone && (
-                <p className="text-neutral-600 text-sm mb-3">
-                  📞 {nearestSalon.phone}
-                </p>
-              )}
-              <p className="text-neutral-500 text-xs italic">
-                💇‍♀️ Our stylists also offer at-home services. Contact your local salon for availability and booking.
-              </p>
-            </motion.div>
-          )}
+          {/* Q&A Section - Always show */}
+          <div className="mt-12">
+            <SalonQnASection />
+          </div>
         </motion.div>
 
         {/* Image */}

@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Leaf, Heart, Sparkles } from 'lucide-react';
-import { getUserLocationFromIP, findNearestSalon } from '@/lib/nearest-salon';
-import SalonQnASection from '../SalonQnASection';
 
 const pillars = [
   {
@@ -23,27 +21,6 @@ const pillars = [
 ];
 
 export default function PhilosophySection() {
-  const [nearestSalon, setNearestSalon] = useState(null);
-
-  useEffect(() => {
-    const findSalon = async () => {
-      try {
-        const salonsResponse = await fetch('/data/salons.json');
-        const salons = await salonsResponse.json();
-        
-        const location = await getUserLocationFromIP();
-        
-        if (location && location.latitude && location.longitude) {
-          const nearest = findNearestSalon(location.latitude, location.longitude, salons);
-          setNearestSalon(nearest);
-        }
-      } catch (error) {
-        console.error('Error finding nearest salon:', error);
-      }
-    };
-
-    findSalon();
-  }, []);
 
   return (
     <section className="py-24 md:py-32 bg-[#f8f7f5]">
