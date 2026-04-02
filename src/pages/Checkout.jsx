@@ -1,14 +1,15 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { openWhatsApp, generateOrderCode } from '@/lib/whatsapp';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 
 export default function Checkout() {
-    const phone = '61468231108';
+    const { phoneNumber } = useWhatsApp();
 
     const openForOrder = () => {
         const code = generateOrderCode();
         const message = `Order Inquiry: ${code}\nI have completed payment / have a question about my order. Please advise.`;
-        openWhatsApp(phone, message);
+        openWhatsApp(phoneNumber, message);
     };
 
     return (

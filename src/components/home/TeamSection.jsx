@@ -3,37 +3,124 @@ import { motion } from 'framer-motion';
 
 const team = [
     {
-        name: 'Chrystalla Dimarelis',
-        role: 'Co-Owner & Stylist',
-        bio: 'Industry famous for innovative techniques and an unwavering commitment to your hair health.',
-        image: 'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=600&q=80'
+        name: 'Ruby Wilcox',
+        role: 'Cut Specialist',
+        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
+        image: '/images/RubyWilcox.png'
     },
     {
-        name: 'Kayla Tzavellas',
-        role: 'Co-Owner & Stylist',
-        bio: 'Celebrated for her expertise in precision cutting, colour artistry, and transformative styling.',
-        image: '/images/kayla.png'
-    }
-    ,
+        name: 'Grace Silver',
+        role: 'Colour Specialist',
+        bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
+        image: '/images/GraceSilver.png'
+    },
     {
-        name: 'Hannah-G',
-        role: 'Co-Owner & Stylist',
-        bio: 'Known for warm client care, creative colour blends, and precision finishing touches.',
-        image: '/images/hannah.png'
-    }
-    ,
+        name: 'Rachelle Clifford',
+        role: 'Stylist',
+        bio: 'Passionate stylist dedicated to exceptional hair care and creative transformations.',
+        image: '/images/RachelleClifford.png'
+    },
     {
-        name: 'Lily Carmody',
-        role: 'Senior Stylist',
-        bio: 'Specialises in modern cuts and bespoke colouring with a gentle touch.',
-        image: '/images/lily.png'
-    }
-    ,
+        name: 'Stacey Hall',
+        role: 'Cut Specialist',
+        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
+        image: '/images/StaceyHall.png'
+    },
     {
-        name: 'Eilish Beckett',
-        role: 'Stylist & Colourist',
-        bio: 'Expert in lived-in colour, balayage, and personalised styling.',
-        image: '/images/eilish.png'
+        name: 'Emmah Taylor',
+        role: 'Colour Specialist',
+        bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
+        image: '/images/EmmahTaylor.png'
+    },
+    {
+        name: 'Jelaa Kim',
+        role: 'Stylist',
+        bio: 'Passionate stylist dedicated to exceptional hair care and creative transformations.',
+        image: '/images/JelaaKim.png'
+    },
+    {
+        name: 'Gabriella Louise',
+        role: 'Cut Specialist',
+        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
+        image: '/images/GabriellaLouise.png'
+    },
+    {
+        name: 'Tiffany Collier',
+        role: 'Colour Specialist',
+        bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
+        image: '/images/TiffanyCollier.jpeg'
+    },
+    {
+        name: 'Tess McMillan',
+        role: 'Stylist',
+        bio: 'Passionate stylist dedicated to exceptional hair care and creative transformations.',
+        image: '/images/TessMcMillan.png'
+    },
+    {
+        name: 'Jennifer Mia',
+        role: 'Cut Specialist',
+        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
+        image: '/images/JenniferMia.png'
+    },
+    {
+        name: 'Olivia Hobson',
+        role: 'Colour Specialist',
+        bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
+        image: '/images/OliviaHobson.png'
+    },
+    {
+        name: 'Daisy Louise',
+        role: 'Stylist',
+        bio: 'Passionate stylist dedicated to exceptional hair care and creative transformations.',
+        image: '/images/DaisyLouise.png'
+    },
+    {
+        name: 'Nikki Dale',
+        role: 'Cut Specialist',
+        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
+        image: '/images/NikkiDale.png'
+    },
+    {
+        name: 'Christine Hegarty',
+        role: 'Colour Specialist',
+        bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
+        image: '/images/ChristineHegarty.png'
+    },
+    {
+        name: 'Rachel Dickson',
+        role: 'Stylist',
+        bio: 'Passionate stylist dedicated to exceptional hair care and creative transformations.',
+        image: '/images/RachelDickson.png'
+    },
+    {
+        name: 'Jess Smith',
+        role: 'Cut Specialist',
+        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
+        image: '/images/JessSmith.png'
+    },
+    {
+        name: 'Nicolle Benson',
+        role: 'Colour Specialist',
+        bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
+        image: '/images/NicolleBenson.png'
+    },
+    {
+        name: 'Fredy Flower',
+        role: 'Stylist',
+        bio: 'Passionate stylist dedicated to exceptional hair care and creative transformations.',
+        image: '/images/FredyFlower.png'
+    },
+    {
+        name: 'Cassandra Norman',
+        role: 'Cut Specialist',
+        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
+        image: '/images/CassandraNorman.png'
+    },
+    {
+        name: 'Diana Chase',
+        role: 'Colour Specialist',
+        bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
+        image: '/images/DianaChase.png'
     }
 ];
 
@@ -55,7 +142,7 @@ export default function TeamSection() {
                         Meet the Team
                     </h2>
                     <p className="text-neutral-500 max-w-2xl mx-auto leading-relaxed">
-                        These powerhouse Geminis hold over two decades of combined experience, creative expertise, and passion. Your hair is in good hands.
+                        Our talented team of stylists brings creativity, expertise, and passion to every service. Meet the professionals who make your hair dreams come true.
                     </p>
                 </motion.div>
 

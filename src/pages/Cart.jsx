@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Trash2, ShoppingBag, Loader2, MessageCircle } from 'lucide-react';
+import { buildWhatsAppUrl } from '@/lib/whatsapp';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 import { toast } from 'sonner';
 
 const SHIPPING_FEE = 15;
@@ -15,6 +17,7 @@ const SHIPPING_FEE = 15;
 export default function Cart() {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const { phoneNumber } = useWhatsApp();
     const [checkoutMode, setCheckoutMode] = useState(false);
     const [form, setForm] = useState({
         name: '',
@@ -318,7 +321,7 @@ export default function Cart() {
                                     <p className="font-medium text-green-900 mb-1">Questions?</p>
                                     <p className="text-neutral-600 text-xs mb-2">Chat with us on WhatsApp for product photos, videos, and instant support!</p>
                                     <a
-                                        href="https://wa.me/61468231108"
+                                        href={buildWhatsAppUrl(phoneNumber, 'Hello, I have questions about my cart!')}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="text-xs text-green-600 hover:underline font-medium"

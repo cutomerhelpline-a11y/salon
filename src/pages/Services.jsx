@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { listServices } from '@/lib/data-loader';
 import { openWhatsApp, generateOrderCode } from '@/lib/whatsapp';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import { motion } from 'framer-motion';
@@ -17,13 +18,12 @@ const CATEGORY_LABELS = {
 
 export default function Services() {
     const [activeTab, setActiveTab] = useState('all');
+    const { phoneNumber } = useWhatsApp();
 
     const { data: services = [], isLoading } = useQuery({
         queryKey: ['services'],
         queryFn: () => listServices(),
     });
-
-    const phone = '61468231108';
 
     const bookService = (service) => {
         const code = generateOrderCode();
@@ -37,7 +37,7 @@ export default function Services() {
             'Notes: ',
         ];
         const message = lines.join('\n');
-        openWhatsApp(phone, message);
+        openWhatsApp(phoneNumber, message);
     };
 
     const filtered = activeTab === 'all'

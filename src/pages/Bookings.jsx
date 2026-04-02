@@ -8,9 +8,11 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { CheckCircle2, MapPin, Phone, Mail, MessageCircle } from 'lucide-react';
-import { openWhatsApp, generateOrderCode } from '@/lib/whatsapp';
+import { openWhatsApp, generateOrderCode, buildWhatsAppUrl } from '@/lib/whatsapp';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 
 export default function Bookings() {
+    const { phoneNumber } = useWhatsApp();
     const [form, setForm] = useState({
         client_name: '',
         client_email: '',
@@ -36,8 +38,6 @@ export default function Bookings() {
         queryFn: () => listServices(),
     });
 
-    const phone = '61468231108';
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const code = generateOrderCode();
@@ -57,7 +57,7 @@ export default function Bookings() {
             `Notes: ${form.notes || 'None'}`,
         ];
         const message = lines.join('\n');
-        openWhatsApp(phone, message);
+        openWhatsApp(phoneNumber, message);
         setSubmitted(true);
     };
 
@@ -194,11 +194,26 @@ export default function Bookings() {
                                             <SelectTrigger className="border-neutral-200"><SelectValue /></SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="no_preference">No Preference</SelectItem>
-                                                <SelectItem value="chrystalla">Chrystalla</SelectItem>
-                                                <SelectItem value="kayla">Kayla</SelectItem>
-                                                <SelectItem value="hannah">Hannah-G</SelectItem>
-                                                <SelectItem value="lily">Lily Carmody</SelectItem>
-                                                <SelectItem value="eilish">Eilish Beckett</SelectItem>
+                                                <SelectItem value="ruby_wilcox">Ruby Wilcox - Cut Specialist</SelectItem>
+                                                <SelectItem value="grace_silver">Grace Silver - Colour Specialist</SelectItem>
+                                                <SelectItem value="rachelle_clifford">Rachelle Clifford - Stylist</SelectItem>
+                                                <SelectItem value="stacey_hall">Stacey Hall - Cut Specialist</SelectItem>
+                                                <SelectItem value="emmah_taylor">Emmah Taylor - Colour Specialist</SelectItem>
+                                                <SelectItem value="jelaa_kim">Jelaa Kim - Stylist</SelectItem>
+                                                <SelectItem value="gabriella_louise">Gabriella Louise - Cut Specialist</SelectItem>
+                                                <SelectItem value="tiffany_collier">Tiffany Collier - Colour Specialist</SelectItem>
+                                                <SelectItem value="tess_mcmillan">Tess McMillan - Stylist</SelectItem>
+                                                <SelectItem value="jennifer_mia">Jennifer Mia - Cut Specialist</SelectItem>
+                                                <SelectItem value="olivia_hobson">Olivia Hobson - Colour Specialist</SelectItem>
+                                                <SelectItem value="daisy_louise">Daisy Louise - Stylist</SelectItem>
+                                                <SelectItem value="nikki_dale">Nikki Dale - Cut Specialist</SelectItem>
+                                                <SelectItem value="christine_hegarty">Christine Hegarty - Colour Specialist</SelectItem>
+                                                <SelectItem value="rachel_dickson">Rachel Dickson - Stylist</SelectItem>
+                                                <SelectItem value="jess_smith">Jess Smith - Cut Specialist</SelectItem>
+                                                <SelectItem value="nicolle_benson">Nicolle Benson - Colour Specialist</SelectItem>
+                                                <SelectItem value="fredy_flower">Fredy Flower - Stylist</SelectItem>
+                                                <SelectItem value="cassandra_norman">Cassandra Norman - Cut Specialist</SelectItem>
+                                                <SelectItem value="diana_chase">Diana Chase - Colour Specialist</SelectItem>
                                             </SelectContent>
                                         </Select>
                                     </div>
@@ -260,7 +275,7 @@ export default function Bookings() {
                                 <div>
                                     <p className="font-semibold text-green-900 mb-2">Have Questions?</p>
                                     <p className="text-neutral-700 text-sm mb-3">Chat with us on WhatsApp! Share photos, videos, ask about services, or even video call for a consultation.</p>
-                                    <a href="https://wa.me/61468231108" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">💬 Chat on WhatsApp</a>
+                                    <a href={buildWhatsAppUrl(phoneNumber, 'Hello, I have a question about your services!')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">💬 Chat on WhatsApp</a>
                                 </div>
                             </div>
                         </div>

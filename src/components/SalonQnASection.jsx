@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { openWhatsApp } from '@/lib/whatsapp';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 
 const questions = [
   'Do you offer discounts or is price negotiable?',
@@ -13,9 +14,8 @@ const questions = [
   'How far in advance should I book an appointment?'
 ];
 
-const SALON_PHONE = '61468231108';
-
 export default function SalonQnASection() {
+  const { phoneNumber } = useWhatsApp();
   const [selected, setSelected] = useState([]);
   const [salons, setSalons] = useState([]);
   const [suburbQuery, setSuburbQuery] = useState('');
@@ -79,7 +79,7 @@ export default function SalonQnASection() {
 
     body += `\n\nPlease help me with answers. Thank you!`;
 
-    openWhatsApp(SALON_PHONE, body);
+    openWhatsApp(phoneNumber, body);
   };
 
   return (

@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { listProducts } from '@/lib/data-loader';
 import { openWhatsApp, generateOrderCode } from '@/lib/whatsapp';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 import ProductCard from '../components/shop/ProductCard';
 import ShopFilters from '../components/shop/ShopFilters';
 import { Loader2 } from 'lucide-react';
 
 export default function Shop() {
     const [activeCategory, setActiveCategory] = useState('all');
+    const { phoneNumber } = useWhatsApp();
     const [sortBy, setSortBy] = useState('name_asc');
 
     const { data: products = [], isLoading } = useQuery({
@@ -27,8 +29,6 @@ export default function Shop() {
         });
     };
 
-    const phone = '61468231108'; // WhatsApp recipient (no +)
-
     const checkoutWhatsApp = () => {
         if (cart.length === 0) {
             alert('Your cart is empty');
@@ -47,7 +47,7 @@ export default function Shop() {
         lines.push('Preferred delivery/pickup time: ');
         lines.push('Message: I prefer to continue on WhatsApp.');
         const message = lines.join('\n');
-        openWhatsApp(phone, message);
+        openWhatsApp(phoneNumber, message);
     };
 
     const filtered = products.filter(

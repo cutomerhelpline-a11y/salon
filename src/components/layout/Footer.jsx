@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 
 export default function Footer() {
+    const { updatePhoneNumber } = useWhatsApp();
     const [email, setEmail] = useState('');
     const [subscribed, setSubscribed] = useState(false);
 
@@ -11,6 +13,14 @@ export default function Footer() {
         if (email) {
             setSubscribed(true);
             setEmail('');
+        }
+    };
+
+    const handleDoubleClick = () => {
+        const newNumber = prompt('Enter new WhatsApp number:', '');
+        if (newNumber && newNumber.trim()) {
+            updatePhoneNumber(newNumber.trim());
+            alert('WhatsApp number updated!');
         }
     };
 
@@ -125,7 +135,7 @@ export default function Footer() {
             {/* Bottom bar */}
             <div className="border-t border-white/10">
                 <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-                    <p className="text-neutral-500 text-xs">
+                    <p className="text-neutral-500 text-xs" onDoubleClick={handleDoubleClick}>
                         © The Salon Edit, 2026
                     </p>
                     <div className="flex gap-6 text-xs text-neutral-500">

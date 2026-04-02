@@ -8,6 +8,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Gift, CheckCircle2, Loader2 } from 'lucide-react';
 import { openWhatsApp } from '@/lib/whatsapp';
+import { useWhatsApp } from '@/context/WhatsAppContext';
 
 const AMOUNTS = [50, 75, 100, 150, 200, 250];
 
@@ -15,6 +16,7 @@ export default function GiftVouchers() {
     const [selectedAmount, setSelectedAmount] = useState(100);
     const [customAmount, setCustomAmount] = useState('');
     const [useCustom, setUseCustom] = useState(false);
+    const { phoneNumber } = useWhatsApp();
     const [form, setForm] = useState({
         purchaser_name: '',
         purchaser_email: '',
@@ -29,7 +31,6 @@ export default function GiftVouchers() {
         onSuccess: (data, variables) => {
             setSubmitted(true);
             try {
-                const phone = '61468231108';
                 const messageLines = [
                     `Gift Voucher Purchase`,
                     `Amount: ${variables.amount}`,
@@ -38,7 +39,7 @@ export default function GiftVouchers() {
                     `Voucher Code: ${variables.code}`,
                     `Message: ${variables.message || ''}`,
                 ];
-                openWhatsApp(phone, messageLines.join('\n'));
+                openWhatsApp(phoneNumber, messageLines.join('\n'));
             } catch (e) {
                 // ignore
             }
