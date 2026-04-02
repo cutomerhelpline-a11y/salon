@@ -194,7 +194,6 @@ export default function Bookings() {
                                             <SelectTrigger className="border-neutral-200"><SelectValue /></SelectTrigger>
                                             <SelectContent>
                                                 <SelectItem value="no_preference">No Preference</SelectItem>
-                                                <SelectItem value="ruby_wilcox">Ruby Wilcox - Cut Specialist</SelectItem>
                                                 <SelectItem value="grace_silver">Grace Silver - Colour Specialist</SelectItem>
                                                 <SelectItem value="rachelle_clifford">Rachelle Clifford - Stylist</SelectItem>
                                                 <SelectItem value="stacey_hall">Stacey Hall - Cut Specialist</SelectItem>

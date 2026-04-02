@@ -3,12 +3,6 @@ import { motion } from 'framer-motion';
 
 const team = [
     {
-        name: 'Ruby Wilcox',
-        role: 'Cut Specialist',
-        bio: 'Expert in precision cuts and modern techniques, creating styles that elevate your look.',
-        image: '/images/RubyWilcox.png'
-    },
-    {
         name: 'Grace Silver',
         role: 'Colour Specialist',
         bio: 'Master colourist specializing in vibrant tones and transformative colour artistry.',
